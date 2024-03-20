@@ -1,5 +1,6 @@
 html *{
     -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
 }
 
 .h6, h6 {
@@ -169,7 +170,7 @@ a .material-icons {
 .profile-page .description {
     margin: 1.071rem auto 0;
     max-width: 600px;
-    color: #DDA0DD;
+    color: #BA55D3;
     font-weight: 500;
 }
 

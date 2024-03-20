@@ -1,19 +1,26 @@
-from logging import Manager
+from flask import Flask, request, make_response, render_template, session, redirect, url_for
+from flask_mail import Message
 
-from flask import Flask, request, make_response, render_template, session
-from forms import MyForm
-an_app = Flask(__name__)
+from app import an_app, mail
 
-an_app.config['SECRET_KEY'] = 'MyLittlePony'
+from app.forms import MyForm
+from models import Bar
+
 
 @an_app.errorhandler(404)
 def page_not_found(e):
     return render_template('error.html'), 404
 
 @an_app.route("/form")
-def form(name=None):
+def form_app(name=None):
         return render_template('form.html')
-
+@an_app.route("/bar", methods=['GET', 'POST'])
+def bar(name=None):
+    cocktails = Bar.query.all()
+    return render_template('Bar.html', cocktails=cocktails)
+@an_app.route("/activity", methods=['GET','POST'])
+def activity():
+    return render_template('Activities.html')
 
 @an_app.route("/", methods=['GET', 'POST'])
 def index():
@@ -32,8 +39,18 @@ def index():
       session['email'] = form.email.data
       session['phone'] = form.phone.data
       session['mes'] = form.message.data
-      return render_template('form.html', form=form, name=session['name'], email=session['email'], phone=session['phone'], message=session['mes'])
-    return render_template('res.html', form=form, name=name, email=email, phone=phone, message=mes)
+      return redirect(url_for('send_email'))
+    return render_template('poruchik.html', form=form, name=name, email=email, phone=phone, message=mes)
 
-if __name__ == '__main__':
-    an_app.run(debug=True)
+
+@an_app.route('/send_email')
+def send_email():
+    recipient = session.get('email')
+    name = session.get('name')
+    phone = session.get('phone')
+    message = session.get('mes')
+    msg = Message('Subject', sender=an_app.config['MAIL_USERNAME'], recipients=[recipient])
+    msg.html = render_template('email.html', name=name, email=recipient, phone=phone, message=message)
+
+    mail.send(msg)
+    return 'Email sent to ' + recipient

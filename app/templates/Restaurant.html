@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cocktails</title>
+</head>
+<body>
+    <h1>List of Cocktails</h1>
+    <ul>
+        {% for cocktail in cocktails %}
+            <li>{{ cocktail.name }} - Ingredients: {{ cocktail.ingredients }} - Volume: {{ cocktail.volume }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

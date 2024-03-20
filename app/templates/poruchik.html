@@ -3,23 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Hell</title>
+    {% extends "res.html" %}
     <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="static/form.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
-    <link rel="stylesgeet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
-</head>
 
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
+</head>
+{% block content %}
 <body class="profile-page">
 
+   <div class="page-header header-filter" data-parallax="true" > <p  class="fade-in" style="text-align:center;z-index: 1000;font-size:100px;margin: 0 auto; float: none;margin-top: -250px;color: #9932CC;">
+      The Restaurant at the
+       <br> end of the Universe</p> </div>
 
-   <div class="page-header header-filter" data-parallax="true"></div>
   <div id="cardToShow" class="card text-center sticky-top" style="z-index: 1000; width: 300px; display: none;margin: 0 auto; float: none; margin-top: -500px;" >
     <div class="card-header h5 text-white " style="background-color:#2f313a">Contact Us</div>
     <div class="card-body px-5" style="color:black;">
         <form method="post">
             <div class="info">
+                {% if form %}
                 {{ form.hidden_tag()}}
                {% if 'name' in session %}
                 {% set name = session['name'] %}
@@ -38,13 +44,44 @@
                 {{ form.phone.label}} {{ form.phone()}}
                 {% endif %}
                 {{ form.message.label}} {{ form.message()}}
+                  {% if form.errors %}
+
+            {% for field, errors in form.errors.items() %}
+                <li>{{ field }}:
+                    <ul>
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+
+    {% endif %}
                 {{ form.submit() }}
+                {% endif %}
             </div>
 </form>
     </div>
        </div>
-   {% block content %}
-    {% endblock %}
+
+
+<script>
+    const button1 = document.getElementById('button1');
+const cardToShow = document.getElementById('cardToShow');
+let show_is = false;
+
+button1.addEventListener('click', function() {
+    if (!show_is) {
+        cardToShow.style.display = "inherit";
+        show_is = true;
+    } else {
+        cardToShow.style.display = "none";
+        show_is = false;
+    }
+});
+</script>
+
+
     <div class="main main-raised">
 
 		<div class="profile-content">
@@ -54,8 +91,7 @@
 	                <div class="col-md-6 ml-auto mr-auto">
         	           <div class="profile">
 	                        <div class="name">
-	                            <h2 class="title"style="color: #9932CC;font-size: 2.75rem" >The Restaurant at the
-                    <br>end of the Universe</h2>
+
 	                        </div>
 	                    </div>
     	            </div>
@@ -70,24 +106,25 @@ This is, many would say, impossible. </p>
                 <div class="description text-center" style="margin-top:4em; color:#BA55D3 ">
                     <h3> We provide 42 services</h3>
                 </div>
-				<div class="row">
+
+				<!--div class="row">
 					<div class="col-md-6 ml-auto mr-auto">
                         <div class="profile-tabs">
                           <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#studio" role="tab" data-toggle="tab">
+                                <a class="nav-link active" href="#s" role="tab" data-toggle="tab">
                                   <i class="material-icons">camera</i>
                                   Apartments
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#works" role="tab" data-toggle="tab">
+                                <a class="nav-link" href="#w" role="tab" data-toggle="tab">
                                   <i class="material-icons">palette</i>
                                     Restaurant
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#favorite" role="tab" data-toggle="tab">
+                                <a class="nav-link" href="#f" role="tab" data-toggle="tab">
                                   <i class="material-icons">favorite</i>
                                     Events
                                 </a>
@@ -98,7 +135,7 @@ This is, many would say, impossible. </p>
             </div>
 
           <div class="tab-content tab-space">
-            <div class="tab-pane active text-center gallery" id="studio">
+            <div class="tab-pane active text-center gallery" id="s">
   				<div class="row">
   					<div class="col-md-3 ml-auto">
   					    <img src="static/room.jpg"  class="rounded">
@@ -110,7 +147,7 @@ This is, many would say, impossible. </p>
   					</div>
   				</div>
   			</div>
-            <div class="tab-pane text-center gallery" id="works">
+            <div class="tab-pane text-center gallery" id="w">
       			<div class="row">
       				<div class="col-md-3 ml-auto">
                       <img src="static/cafe.jpg" class="rounded">
@@ -122,7 +159,7 @@ This is, many would say, impossible. </p>
       				</div>
       			</div>
   			</div>
-            <div class="tab-pane text-center gallery" id="favorite">
+            <div class="tab-pane text-center gallery" id="f">
       			<div class="row">
       				<div class="col-md-3 ml-auto">
       				  <img src="static/card.jpeg" class="rounded">
@@ -135,7 +172,72 @@ This is, many would say, impossible. </p>
       			    </div>
       			</div>
       		</div>
-          </div>
+          </div-->
+<div class="description text-center" style="margin-top:2em; margin-bottom:2em;color:black; ">
+                    <h3> Services</h3>
+                </div>
+           <div class="card-deck">
+
+               <div class="card">
+                   <a href="/#" style="text-decoration: none; color: inherit;">
+    <img class="card-img-top" src="static/walks.jpg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Space walking </h5>
+      <p class="card-text"></p>
+      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+                       </a>
+  </div>
+
+
+  <div class="card">
+      <a href="/#" style="text-decoration: none; color: inherit;">
+    <img class="card-img-top" src="static/room1.jpeg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Apartments</h5>
+      <p class="card-text"></p>
+      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+          </a>
+  </div>
+
+
+  <div class="card">
+      <a href="/#" style="text-decoration: none; color: inherit;">
+    <img class="card-img-top" src="static/cafe2.jpeg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Restaurant</h5>
+      <p class="card-text"></p>
+      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+          </a>
+  </div>
+
+
+    <div class="card">
+          <a href="/bar" style="text-decoration: none; color: inherit;">
+        <img class="card-img-top" src="static/cafe1.jpeg" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">Bar</h5>
+            <p class="card-text"></p>
+            <p class="card-text"><small class="text-muted">See</small></p>
+        </div>
+ </a>
+    </div>
+
+
+   <div class="card">
+    <a href="/#" style="text-decoration: none; color: inherit;">
+    <img class="card-img-top" src="static/card.jpeg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Activities</h5>
+      <p class="card-text"></p>
+      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+  </a>
+  </div>
+
+</div>
 
 
             </div>
@@ -155,6 +257,8 @@ This is, many would say, impossible. </p>
 
 
 </body>
+
+
 <script>var big_image;
 
 $(document).ready(function() {
@@ -310,10 +414,7 @@ materialKit = {
   }, 17)
 };
 
-// Returns a function, that, as long as it continues to be invoked, will not
-// be triggered. The function will be called after it stops being called for
-// N milliseconds. If `immediate` is passed, trigger the function on the
-// leading edge, instead of the trailing.
+
 
 function debounce(func, wait, immediate) {
   var timeout;
@@ -391,5 +492,7 @@ var BrowserDetect = {
   ]
 
 };</script>
+ {% endblock %}
+
 
 </html>
