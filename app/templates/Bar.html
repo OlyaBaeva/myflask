@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Bar</title>
    {% extends "res.html" %}
+    {% block content %}
     <link rel="stylesheet" href="static/form.css">
     <link rel="stylesheet" href="static/bar.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
@@ -19,7 +20,7 @@
 
 <body >
 
-{% block content %}
+
 <div id="cardToShow" class="card text-center sticky-top" style="display:none;position: fixed; top: 0; left: 50%; transform: translateX(-50%); z-index: 1000; width: 300px; background-color: #ffffff;">
     <div class="card-header h5 text-white" style="background-color: #2f313a">Contact Us</div>
     <div class="card-body px-5" style="color: black;">
@@ -78,7 +79,7 @@
       {% for cocktail in cocktails %}
         <div class="col-lg-4 mb-4">
           <div class="card">
-            <img src="static/images/{{cocktail.id}}.png" alt=" class="card-img-top">
+            <img src="static/images/{{cocktail.id}}.png" alt="" class="card-img-top"/>
             <div class="card-body">
               <h5 class="card-title">{{ cocktail.name }}</h5>
               <p class="card-text">- Ingredients: {{ cocktail.ingredients }}</p>

@@ -72,7 +72,24 @@
 
 
 </section>
-
+<section id="gallery">
+  <div class="container">
+    <div class="row">
+      {% for event in events %}
+        <div class="col-lg-4 mb-4">
+          <div class="card">
+           <img src="{{ url_for('static', filename='images/' + event.photo) }}" alt="Event Photo">
+            <div class="card-body">
+              <h5 class="card-title">{{ event.name }}</h5>
+              <p class="card-text">- Description: {{ event.description }}</p>
+              <a href="#" class="btn btn-outline-success btn-sm">Read More</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
