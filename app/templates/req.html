@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Requests</title>
+    {% extends "res.html" %}
+    {% block content %}
+    <link rel="stylesheet" href="static/req.css">
+
+</head>
+<body>
+{% if current_user.is_authenticated %}
+<div id="cardToShow" class="card text-center sticky-top" style="display:none;position: fixed; top: 0; left: 50%; transform: translateX(-50%); z-index: 1000; width: 300px; background-color: #ffffff;">
+    <div class="card-header h5 text-white" style="background-color: #2f313a">Contact Us</div>
+    <div class="card-body px-5" style="color: black;">
+
+        <form method="post">
+            <div class="info">
+                {{ form.csrf_token }}
+    <div>
+        {{ form.message.label }}
+        {{ form.message }}
+        {% for error in form.message.errors %}
+            <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+    </div>
+    <div>
+        {{ form.submit() }}
+     </div>
+            </div>
+</form>
+
+    </div>
+       </div>
+{% endif %}
+ {% for a in ans %}
+<figure class="snip1157">
+  <blockquote>{{ a.mes }}
+    <div class="arrow"></div>
+  </blockquote>
+  <img src="{{ url_for('static', filename='images/user.png') }}" alt="sq-sample3" />
+  <div class="author">
+    <h5>{{a.nick}} <span> {{a.username}}</span></h5>
+  </div>
+</figure>
+{% endfor %}
+
+<div class="button-container">
+        <button id="b"  type="submit" >Leaved review</button>
+    </div>
+<script>
+    const button1 = document.getElementById('b');
+const cardToShow = document.getElementById('cardToShow');
+let show_is = false;
+
+button1.addEventListener('click', function() {
+    if (!show_is) {
+        cardToShow.style.display = "inherit";
+        show_is = true;
+    } else {
+        cardToShow.style.display = "none";
+        show_is = false;
+    }
+});
+</script>
+{% endblock %}
+ </body>
+</html>

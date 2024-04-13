@@ -45,17 +45,34 @@
                             <i class="material-icons">favorite</i>
                             Bar
                         </a>
-                            </li>
+                    </li>
                     <li class="nav-item">
                         <a href="/activity" class="dropdown-toggle nav-link" aria-expanded="false">
-                            <i class="material-icons">favorite</i>
+                            <i class="material-icons">flight_takeoff</i>
                             Events
                         </a>
-                            </li>
+                    </li>
+                     <li class="nav-item">
+                        <a href="/req" class="dropdown-toggle nav-link" aria-expanded="false">
+                            <i class="material-icons">comment</i>
+                            Feedback
+                        </a>
+                    </li>
       				<li class="nav-item">
-      					<a type="button" id="button1" class="btn " type="submit" >
+      					<a type="button" id="button1" class="dropdown-toggle nav-link" aria-expanded="false" type="submit" >
       						 Contact us
                         </a>
+      				</li>
+                    <li class="nav-item">
+                        {% if current_user.is_authenticated %}
+      					<a href="{{ url_for('auth.logout') }}"  class="dropdown-toggle nav-link" aria-expanded="false" >
+                            <i class="material-icons">input</i>Sign Out
+                        </a>
+                        {% else %}
+                        <a href="{{ url_for('auth.login') }}" class="dropdown-toggle nav-link" aria-expanded="false" >
+      						 <i class="material-icons">login</i> Sign In
+                        </a>
+                        {% endif %}
       				</li>
                 </ul>
             </div>
