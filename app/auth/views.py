@@ -3,8 +3,14 @@ from flask_login import login_user, logout_user
 
 from .forms import LoginForm, RegForm
 from . import auth
-from ..import db
+from .. import db
 from ..models import User
+
+
+@auth.route("/quest")
+def quest():
+    return render_template('Question.html')
+
 
 @auth.route("/login", methods=['GET', 'POST'])
 def login():
@@ -21,11 +27,13 @@ def login():
         flash('Invalid username or password', 'error')
     return render_template('login.html', form=form)
 
+
 @auth.route("/logout")
 def logout():
     logout_user()
     flash('You have been logged out.')
     return redirect(url_for('main.index'))
+
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():

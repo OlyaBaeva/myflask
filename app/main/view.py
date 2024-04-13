@@ -70,21 +70,18 @@ def send_email():
 
 @main.route('/req', methods=['GET', 'POST'])
 def view_req():
-    ans = Answer.query.all()
     if request.method == 'GET':
         ans = Answer.query.all()
         form = ReviewForm()
         return render_template('req.html', ans=ans, form=form)
     else:
-        print("text")
-        email = session.get('email')
-        if email is not None:
-            form = ReviewForm()
-            if current_user.is_authenticated:
-                return render_template('req.html', ans=ans, form=form)
-            return redirect(url_for('auth.login'))
-        else:
-            return redirect(url_for('auth.register'))
+        mes = request.form['message']
+        user=current_user
+        new_answer = Answer(username=user.username, phone=user.phone, email=user.email, nick=user.nick,
+                            password_hash=user.password_hash, mes=mes)
+        db.session.add(new_answer)
+        db.session.commit()
+        return redirect(url_for('.view_req'))
 
 '''''
 @main.route('/leave_review', methods=['GET', 'POST'])

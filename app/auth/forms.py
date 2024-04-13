@@ -1,20 +1,20 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, PasswordField, EmailField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
 
 from app.models import User
 
 
 class LoginForm(FlaskForm):
-    email = StringField("Email: ", validators=[DataRequired(), Length(1,64), Email()])
-    password = StringField("Password: ", validators=[DataRequired()])
+    email = EmailField("Email: ", validators=[DataRequired(), Length(1,64), Email()])
+    password = PasswordField("Password: ", validators=[DataRequired()])
     submit = SubmitField("log in")
 
 class RegForm(FlaskForm):
     nick = StringField("Nickname: ", validators=[DataRequired()])
-    email = StringField("Email: ", validators=[DataRequired(), Length(1,64), Email()])
-    password = StringField("Password: ", validators=[DataRequired(), EqualTo('password2', message="Password doesn't match")])
-    password2 = StringField("Confirm pasword: ", validators=[DataRequired()])
+    email = EmailField("Email: ", validators=[DataRequired(), Length(1,64), Email()])
+    password = PasswordField("Password: ", validators=[DataRequired(), EqualTo('password2', message="Password doesn't match")])
+    password2 = PasswordField("Confirm pasword: ", validators=[DataRequired()])
     submit = SubmitField("Register")
 
 

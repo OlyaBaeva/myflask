@@ -98,7 +98,7 @@ body {
   justify-content: center;
   align-items: center;
   flex-flow: wrap;
-  margin: 0;
+  margin-top: 120px;
   height: 100%;
 }
 

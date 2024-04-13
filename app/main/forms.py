@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField
+from wtforms import StringField, SubmitField, TextAreaField, EmailField
 from wtforms.validators import DataRequired, Email, Length, Regexp, ValidationError
 
 from app.models import User
@@ -8,7 +8,7 @@ from app.models import User
 class MyForm(FlaskForm):
     name = StringField("Name: ", validators=[DataRequired(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
 'Username must have only letters, number, dots and underscore')])
-    email = StringField("Email: ", validators=[DataRequired(), Length(1, 64), Email()])
+    email = EmailField("Email: ", validators=[DataRequired(), Length(1, 64), Email()])
     phone = StringField("Phone: ", validators=[DataRequired()])
     message = TextAreaField("Message", validators=[DataRequired()])
     submit = SubmitField("Submit")
