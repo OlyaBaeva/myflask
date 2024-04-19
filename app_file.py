@@ -1,11 +1,9 @@
 import os
 import unittest
-
-from flask_migrate import Migrate
 from app import create_app, db
 from app.models import *
 an_app = create_app("default")
-migrate = Migrate(an_app, db)
+
 '''''
 @an_app.shell_context_processors
 def make_shell_context():

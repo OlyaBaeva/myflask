@@ -1,10 +1,10 @@
-from flask import request, render_template, session, redirect, url_for, current_app
+from flask import request, render_template, session, redirect, url_for
 from flask_login import current_user
-from flask_mail import Message
+
 
 from . import main
 from .forms import MyForm, ReviewForm
-from .. import mail
+
 from app.models import *
 
 
@@ -43,29 +43,18 @@ def index():
         phone = None
     mes = None
     form = MyForm()
+    print(name, email)
     if form.validate_on_submit():
+        print(name)
         session['name'] = form.name.data
         session['email'] = form.email.data
         session['phone'] = form.phone.data
         session['mes'] = form.message.data
-        return redirect(url_for('.send_email'))
+        return redirect(url_for('auth.send_email'))
     return render_template('poruchik.html', form=form, name=name, email=email, phone=phone, message=mes)
 
 
-@main.route('/send_email')
-def send_email():
-    recipient = session.get('email')
-    name = session.get('name')
-    phone = session.get('phone')
-    message = session.get('mes')
-    msg = Message('Subject', sender=current_app.config['MAIL_USERNAME'], recipients=[recipient])
-    msg.html = render_template('email.html', name=name, email=recipient, phone=phone, message=message)
-    if User.query.filter_by(username=name).first() is None:
-        new_user = User(username=name, phone=phone, email=recipient)
-        db.session.add(new_user)
-        db.session.commit()
-    mail.send(msg)
-    return 'Email sent to ' + recipient
+
 
 
 @main.route('/req', methods=['GET', 'POST'])

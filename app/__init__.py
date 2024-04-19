@@ -2,11 +2,14 @@ import datetime
 from flask import Flask
 from flask_login import LoginManager
 from flask_mail import Mail
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-
+from authlib.integrations.flask_client import OAuth
 from config import config
 mail = Mail()
 db = SQLAlchemy()
+oauth=OAuth()
+migrate = Migrate()
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'auth.login'
@@ -17,8 +20,9 @@ def create_app(config_name="default"):
     config[config_name].init_app(an_app)
     mail.init_app(an_app)
     db.init_app(an_app)
+    migrate.init_app(an_app, db)
     login_manager.init_app(an_app)
-
+    oauth.init_app(an_app)
     from .main import main as main_blueprint
     an_app.register_blueprint(main_blueprint, config=config)
 
