@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Leave a Review</title>
+    <meta charset="UTF-8">
+    <title>Leave a Review</title>
 </head>
 <body>
 <h1>Leave a Review</h1>
 <form method="post">
     {% if nick %}{% set username = nick %}
-        <label for="username"> Nickname:</label>
-        <input type="text" id="username" name="username">
-        <label for="password"> Password:</label>
-        <input type="password" id="password" name="password">
+    <label for="username"> Nickname:</label>
+    <input type="text" id="username" name="username">
+    <label for="password"> Password:</label>
+    <input type="password" id="password" name="password">
     {% else %}
-        <label for="username"> Create Nickname:</label>
-        <input type="text" id="nickname" name="nickname">
-        <label for="password"> Create Password:</label>
-        <input type="password" id="new_password" name="new_password">
-        <label for="password"> Check Password:</label>
-        <input type="password" id="check_password" name="check_password">
+    <label for="username"> Create Nickname:</label>
+    <input type="text" id="nickname" name="nickname">
+    <label for="password"> Create Password:</label>
+    <input type="password" id="new_password" name="new_password">
+    <label for="password"> Check Password:</label>
+    <input type="password" id="check_password" name="check_password">
     {%endif%}
-
     <label for="message">Review:</label>
     <input type="text" id="message" name="message">
-
-<button type="submit">Submit Review</button>
+    <button type="submit">Submit Review</button>
 </form>
 </body>
 </html>

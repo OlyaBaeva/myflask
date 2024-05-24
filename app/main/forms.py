@@ -10,7 +10,9 @@ class MyForm(FlaskForm):
 'Username must have only letters, number, dots and underscore')])
     email = EmailField("Email: ", validators=[DataRequired(), Length(1, 64), Email()])
     phone = StringField("Phone: ", validators=[DataRequired()])
-    message = TextAreaField("Message", validators=[DataRequired()])
+    since = StringField("From: ", validators=[DataRequired()])
+    forend = StringField("To: ", validators=[DataRequired()])
+    NameApart = StringField("Apartments: ", validators=[DataRequired()])
     submit = SubmitField("Submit")
     def validate_email(self, field):
         if User.query.filter_by(email=field.data).first():

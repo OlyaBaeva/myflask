@@ -8,13 +8,17 @@ from . import auth
 from .. import db
 from flask_mail import Message
 from .. import mail
-from ..models import User
+from ..decorators import permission_required
+from ..models import User, Permission, Answer
+
 
 @auth.before_app_request
 def before_request():
     if current_user.is_authenticated and not current_user.confirmed and request.blueprint != 'auth' \
-        and request.endpoint != 'static':
+            and request.endpoint != 'static':
         return redirect(url_for('auth.unconfirmed'))
+
+
 @auth.route("/quest")
 def quest():
     return render_template('Question.html')
@@ -39,11 +43,24 @@ def login():
 @auth.route("/unconfirmed")
 def unconfirmed():
     return "Not confirmed. Unfortunately"
+
+
+@auth.route("/delete/<id>")
+@login_required
+@permission_required(Permission.MODERATE)
+def delete(id):
+    comment = Answer.query.get(id)
+    db.session.delete(comment)
+    db.session.commit()
+    return redirect(url_for('main.view_req'))
+
+
 @auth.route("/logout")
 def logout():
     logout_user()
     flash('You have been logged out.')
     return redirect(url_for('main.index'))
+
 
 @auth.route("/confirm/<token>")
 @login_required
@@ -63,11 +80,6 @@ def send_email():
     recipient = session.get('email')
     name = session.get('name')
     phone = session.get('phone')
-    message = session.get('mes')
-    if User.query.filter_by(username=name).first() is None:
-        new_user = User(username=name, phone=phone, email=recipient)
-        db.session.add(new_user)
-        db.session.commit()
     user = User.query.filter_by(username=name).first()
     token = user.generate_confirmation_token()
     msg = Message('Subject', sender=current_app.config['MAIL_USERNAME'], recipients=[recipient])
@@ -92,9 +104,9 @@ def register():
             user.nick = form.nick.data
             user.password = form.password.data
             db.session.commit()
+            send_email()
             flash('You can now login')
             return redirect(url_for('auth.login'))
         else:
             flash("Unfortunately you can't register", 'error')
-
     return render_template('register.html', form=form)

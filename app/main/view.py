@@ -1,16 +1,14 @@
-from flask import request, render_template, session, redirect, url_for
+from flask import request, render_template, session, redirect, url_for, flash
 from flask_login import current_user
-
-
 from . import main
 from .forms import MyForm, ReviewForm
-
 from app.models import *
+from datetime import datetime
 
 
-@main.route("/form")
-def form_app():
-    return render_template('form.html')
+@main.app_context_processor
+def inject_permission():
+    return dict(Permission=Permission)
 
 
 @main.route("/bar", methods=['GET', 'POST'])
@@ -25,6 +23,80 @@ def activity():
     return render_template('Activities.html', events=events)
 
 
+@main.route("/walks", methods=['GET', 'POST'])
+def walking():
+    return render_template('Walks.html')
+
+
+def date_times(input_date_time1):
+    try:
+        datetime1 = datetime.strptime(input_date_time1, '%m/%d/%Y')
+        return datetime1
+    except:
+        return ""
+
+
+@main.route("/reserve", methods=['GET', 'POST'])
+def reserve():
+    apartments = Apartment.query.all()
+    form = MyForm()
+    if request.method == "GET":
+        return render_template('reserve.html')
+    else:
+        if request.form.get('submit_review') is not None:
+            since = date_times(request.form['since'])
+            forend = date_times(request.form['for'])
+            if since != "" and forend != "":
+                session['since'] = since
+                session['forend'] = forend
+            else:
+                flash('Неправильный формат даты, повторите, пожалуйста', 'error')
+                return render_template('reserve.html')
+        else:
+            session['name'] = form.name.data
+            session['email'] = form.email.data
+            session['phone'] = form.phone.data
+            if User.query.filter_by(username=form.name.data).first() is None:
+                new_user = User(username=form.name.data, phone=form.phone.data, email=form.email.data)
+                db.session.add(new_user)
+            new_book = Reservation(name=form.NameApart.data, email=form.email.data, since=session['since'],
+                                   forend=session['forend'])
+            db.session.add(new_book)
+            db.session.commit()
+            return render_template('booking.html')
+        reservation = Reservation.query.all()
+        since = date_times(request.form['since'])
+        forend = date_times(request.form['for'])
+        free = []
+        for apart in apartments:
+            for reserve in reservation:
+                if reserve.name == apart.Name:
+                    num_reservations = Reservation.query.filter(Reservation.name == apart.Name).filter(
+                        Reservation.since <= forend).filter(Reservation.forend >= since).count()
+                    if apart not in free:
+                        if reserve.forend < since or reserve.since > forend:
+                            free.append(apart)
+                        elif num_reservations < apart.quantity:
+                            free.append(apart)
+        for apartment in apartments:
+            if apartment not in free:
+                free.append(apartment)
+        return render_template('reserve.html', apartments=free, form=form)
+
+
+@main.route("/booking/<info>", methods=['POST'])
+def book(info):
+    since = session.get('since')
+    forend = session.get('forend')
+    if current_user.is_authenticated:
+        email = current_user.email
+        new_book = Reservation(name=info, email=email, since=since, forend=forend)
+        db.session.add(new_book)
+        db.session.commit()
+        return render_template('booking.html')
+    return redirect(url_for('main.reserve'))
+
+
 @main.route("/menu", methods=['GET', 'POST'])
 def restaurant():
     dishes = Dishes.query.all()
@@ -33,28 +105,7 @@ def restaurant():
 
 @main.route("/", methods=['GET', 'POST'])
 def index():
-    if 'name' in session:
-        name = session['name']
-        email = session['email']
-        phone = session['phone']
-    else:
-        name = None
-        email = None
-        phone = None
-    mes = None
-    form = MyForm()
-    print(name, email)
-    if form.validate_on_submit():
-        print(name)
-        session['name'] = form.name.data
-        session['email'] = form.email.data
-        session['phone'] = form.phone.data
-        session['mes'] = form.message.data
-        return redirect(url_for('auth.send_email'))
-    return render_template('poruchik.html', form=form, name=name, email=email, phone=phone, message=mes)
-
-
-
+    return render_template('poruchik.html')
 
 
 @main.route('/req', methods=['GET', 'POST'])
@@ -65,65 +116,9 @@ def view_req():
         return render_template('req.html', ans=ans, form=form)
     else:
         mes = request.form['message']
-        user=current_user
+        user = current_user
         new_answer = Answer(username=user.username, phone=user.phone, email=user.email, nick=user.nick,
                             password_hash=user.password_hash, mes=mes)
         db.session.add(new_answer)
         db.session.commit()
         return redirect(url_for('.view_req'))
-
-'''''
-@main.route('/leave_review', methods=['GET', 'POST'])
-def post_req():
-    print(session.get('email'))
-    email = session.get('email')
-    if email is not None:
-        user = User.query.filter_by(email=email)
-        ans = Answer.query.all()
-        form = ReviewForm()
-        if user.is_authenticated:
-            return redirect(url_for('.req'))
-        return redirect(url_for('auth.login'))
-    else:
-        return redirect(url_for('auth.register'))
-
-
-
-@main.route('/leave_review', methods=['GET', 'POST'])
-@login_required
-def leave_review():
-    email = session.get('email')
-    user = User.query.filter_by(email=email).first()
-    ans = Answer.query.filter_by(email=email).first()
-    if ans is not None:
-        nick = ans.nick
-        if request.method == 'POST':
-           password = request.form['password']
-           mes = request.form['message']
-           if user.verify(password):
-               new_answer =Answer(username=user.username, phone=user.phone, email=user.email, nick=nick, password_hash=user.password_hash, mes = mes)
-               db.session.add(new_answer)
-               db.session.commit()
-               return redirect(url_for('.requests'))
-           else:
-               return "Неверный пароль"
-        else:
-            return render_template('leave_review.html', nick=nick, password=user.password_hash)
-    else:
-        if request.method == 'POST':
-           nick = request.form['nickname']
-           password = request.form['new_password']
-           password2 = request.form['check_password']
-           mes = request.form['message']
-           if password!=password2:
-               return "Не совпадение пароля"
-           else:
-               user.nick = nick
-               user.password=password
-               new_answer=Answer(username=user.username, phone=user.phone, email=user.email, nick=nick, password_hash=user.password_hash, mes=mes)
-               db.session.add(new_answer)
-               db.session.commit()
-               return redirect(url_for('.requests'))
-        else:
-            return render_template('leave_review.html')
-'''''

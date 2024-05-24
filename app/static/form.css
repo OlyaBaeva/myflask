@@ -1,8 +1,8 @@
 .fade-in {
-  opacity: 0; /* начальное значение непрозрачности */
-  animation: fadeIn ease-in 1; /* добавляем анимацию fadeIn */
-  animation-fill-mode: forwards; /* будет видимым после завершения анимации */
-  animation-duration: 10s; /* длительность анимации в 1 секунду */
+  opacity: 0;
+  animation: fadeIn ease-in 1;
+  animation-fill-mode: forwards;
+  animation-duration: 10s;
 }
 
 @keyframes fadeIn {

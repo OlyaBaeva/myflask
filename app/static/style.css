@@ -168,6 +168,7 @@ a .material-icons {
 }
 
 .profile-page .description {
+    padding-top: 25px;
     margin: 1.071rem auto 0;
     max-width: 600px;
     color: #BA55D3;
@@ -299,8 +300,6 @@ img.rounded {
 }
 
 /* dropdown */
-
-
 
 
 .dropdown-menu {

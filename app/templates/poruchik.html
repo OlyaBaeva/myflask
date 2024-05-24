@@ -3,496 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <title>Hell</title>
-    {% extends "res.html" %}
     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='form.css')}}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
+    {% extends "res.html" %}
 </head>
 {% block content %}
 <body class="profile-page">
+<div class="page-header header-filter" data-parallax="true"><p class="fade-in"
+                                                               style="text-align:center;z-index: 1000;font-size:100px;margin: 0 auto; float: none;margin-top: -250px;color: #9932CC;">
+    The Restaurant at the
+    <br> end of the Universe</p></div>
+<div class="main main-raised">
+    <div class="profile-content">
+        <div class="container">
+            <div class="description text-center">
+                <p>The Restaurant at the End of the Universe is one of the most extraordinary ventures in the entire
+                    history of catering.
 
-   <div class="page-header header-filter" data-parallax="true" > <p  class="fade-in" style="text-align:center;z-index: 1000;font-size:100px;margin: 0 auto; float: none;margin-top: -250px;color: #9932CC;">
-      The Restaurant at the
-       <br> end of the Universe</p> </div>
+                    It is built on the fragmented remains of an eventually ruined planet which is (wioll haven be)
+                    enclosed in a vast time bubble and projected forward in time to the precise moment of the End of the
+                    Universe.
 
-  <div id="cardToShow" class="card text-center sticky-top" style="z-index: 1000; width: 300px; display: none;margin: 0 auto; float: none; margin-top: -500px;" >
-    <div class="card-header h5 text-white " style="background-color:#2f313a">Contact Us</div>
-    <div class="card-body px-5" style="color:black;">
-        <form method="post">
-            <div class="info">
-                {% if form %}
-                {{ form.hidden_tag()}}
-               {% if 'name' in session %}
-                {% set name = session['name'] %}
-               {{ form.name.label }}
-               {{ form.name(value=name) }}
-                {% set email = session['email'] %}
-               {{ form.email.label }}
-               {{ form.email(value=email) }}
-                {% set phone = session['phone'] %}
-               {{ form.phone.label }}
-               {{ form.phone(value=phone) }}
-               {% else %}
-               {{ form.name.label }}
-               {{ form.name() }}
-                {{ form.email.label}} {{ form.email()}}
-                {{ form.phone.label}} {{ form.phone()}}
-                {% endif %}
-                {{ form.message.label}} {{ form.message()}}
-                  {% if form.errors %}
-
-            {% for field, errors in form.errors.items() %}
-                <li>{{ field }}:
-                    <ul>
-                        {% for error in errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                </li>
-            {% endfor %}
-
-    {% endif %}
-                {{ form.submit() }}
-                {% endif %}
+                    This is, many would say, impossible. </p>
             </div>
-</form>
-    </div>
-       </div>
-
-
-<script>
-    const button1 = document.getElementById('button1');
-const cardToShow = document.getElementById('cardToShow');
-let show_is = false;
-
-button1.addEventListener('click', function() {
-    if (!show_is) {
-        cardToShow.style.display = "inherit";
-        show_is = true;
-    } else {
-        cardToShow.style.display = "none";
-        show_is = false;
-    }
-});
-</script>
-
-
-    <div class="main main-raised">
-
-		<div class="profile-content">
-
-            <div class="container">
-                <div class="row">
-	                <div class="col-md-6 ml-auto mr-auto">
-        	           <div class="profile">
-	                        <div class="name">
-
-	                        </div>
-	                    </div>
-    	            </div>
-                </div>
-                <div class="description text-center">
-                    <p>The Restaurant at the End of the Universe is one of the most extraordinary ventures in the entire history of catering.
-
-It is built on the fragmented remains of an eventually ruined planet which is (wioll haven be) enclosed in a vast time bubble and projected forward in time to the precise moment of the End of the Universe.
-
-This is, many would say, impossible. </p>
-                </div>
-                <div class="description text-center" style="margin-top:4em; color:#BA55D3 ">
-                    <h3> We provide 42 services</h3>
-                </div>
-
-				<!--div class="row">
-					<div class="col-md-6 ml-auto mr-auto">
-                        <div class="profile-tabs">
-                          <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#s" role="tab" data-toggle="tab">
-                                  <i class="material-icons">camera</i>
-                                  Apartments
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#w" role="tab" data-toggle="tab">
-                                  <i class="material-icons">palette</i>
-                                    Restaurant
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#f" role="tab" data-toggle="tab">
-                                  <i class="material-icons">favorite</i>
-                                    Events
-                                </a>
-                            </li>
-                          </ul>
+            <div class="description text-center" style="margin-top:4em; color:#BA55D3 ">
+                <h3> We provide 42 services</h3>
+            </div>
+            <div class="description text-center" style="margin-top:2em; margin-bottom:2em;color:black; ">
+                <h3> Services</h3>
+            </div>
+            <div class="card-deck">
+                <div class="card">
+                    <a href="/#" style="text-decoration: none; color: inherit;">
+                        <img class="card-img-top" src="static/walks.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Space walking </h5>
+                            <p class="card-text"></p>
+                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                         </div>
-    	    	</div>
-            </div>
-
-          <div class="tab-content tab-space">
-            <div class="tab-pane active text-center gallery" id="s">
-  				<div class="row">
-  					<div class="col-md-3 ml-auto">
-  					    <img src="static/room.jpg"  class="rounded">
-  						<img src="static/room1.jpeg" class="rounded">
-  					</div>
-  					<div class="col-md-3 mr-auto">
-  						<img src="static/magic.jpeg" class="rounded">
-                        <img src="static/registr.jpg" class="rounded">
-  					</div>
-  				</div>
-  			</div>
-            <div class="tab-pane text-center gallery" id="w">
-      			<div class="row">
-      				<div class="col-md-3 ml-auto">
-                      <img src="static/cafe.jpg" class="rounded">
-  					  <img src="static/maxresdefault.jpg" class="rounded">
-  					  <img src="https://images.unsplash.com/photo-1505784045224-1247b2b29cf3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ec2bdc92a9687b6af5089b335691830e&auto=format&fit=crop&w=750&q=80" class="rounded">  					</div>
-      				<div class="col-md-3 mr-auto">
-                      <img src="static/cafe1.jpeg" class="rounded">
-                      <img src="static/cafe2.jpeg" class="rounded">
-      				</div>
-      			</div>
-  			</div>
-            <div class="tab-pane text-center gallery" id="f">
-      			<div class="row">
-      				<div class="col-md-3 ml-auto">
-      				  <img src="static/card.jpeg" class="rounded">
-                      <img src="static/end.jpeg" class="rounded">
-      				</div>
-      				<div class="col-md-3 mr-auto">
-      				  <img src="static/near.jpg" class="rounded">
-      				  <img src="static/maxresdefault.jpg" class="rounded">
-  					  <img src="static/poem.jpg" class="rounded">
-      			    </div>
-      			</div>
-      		</div>
-          </div-->
-<div class="description text-center" style="margin-top:2em; margin-bottom:2em;color:black; ">
-                    <h3> Services</h3>
+                    </a>
                 </div>
-           <div class="card-deck">
-
-               <div class="card">
-                   <a href="/#" style="text-decoration: none; color: inherit;">
-    <img class="card-img-top" src="static/walks.jpg" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">Space walking </h5>
-      <p class="card-text"></p>
-      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-    </div>
-                       </a>
-  </div>
-
-
-  <div class="card">
-      <a href="/#" style="text-decoration: none; color: inherit;">
-    <img class="card-img-top" src="static/room1.jpeg" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">Apartments</h5>
-      <p class="card-text"></p>
-      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-    </div>
-          </a>
-  </div>
-
-
-  <div class="card">
-      <a href="/menu" style="text-decoration: none; color: inherit;">
-    <img class="card-img-top" src="static/cafe2.jpeg" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">Restaurant</h5>
-      <p class="card-text"></p>
-      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-    </div>
-          </a>
-  </div>
-
-
-    <div class="card">
-          <a href="/bar" style="text-decoration: none; color: inherit;">
-        <img class="card-img-top" src="static/cafe1.jpeg" alt="Card image cap">
-        <div class="card-body">
-            <h5 class="card-title">Bar</h5>
-            <p class="card-text"></p>
-            <p class="card-text"><small class="text-muted">See</small></p>
-        </div>
- </a>
-    </div>
-
-
-   <div class="card">
-    <a href="/activity" style="text-decoration: none; color: inherit;">
-    <img class="card-img-top" src="static/images/card.jpeg" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">Activities</h5>
-      <p class="card-text"></p>
-      <p class="card-text"><small class="text-muted">See</small></p>
-    </div>
-  </a>
-  </div>
-
-</div>
-
-
+                <div class="card">
+                    <a href="/reserve" style="text-decoration: none; color: inherit;">
+                        <img class="card-img-top" src="{{ url_for('static', filename='images/room1.jpeg') }}"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Apartments</h5>
+                            <p class="card-text"></p>
+                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        </div>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="/menu" style="text-decoration: none; color: inherit;">
+                        <img class="card-img-top" src="{{ url_for('static', filename='/cafe2.jpeg') }}"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Restaurant</h5>
+                            <p class="card-text"></p>
+                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        </div>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="/bar" style="text-decoration: none; color: inherit;">
+                        <img class="card-img-top" src="{{ url_for('static', filename='/cafe1.jpeg') }}"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Bar</h5>
+                            <p class="card-text"></p>
+                            <p class="card-text"><small class="text-muted">See</small></p>
+                        </div>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="/activity" style="text-decoration: none; color: inherit;">
+                        <img class="card-img-top" src="{{ url_for('static', filename='images/card.jpeg') }}"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Activities</h5>
+                            <p class="card-text"></p>
+                            <p class="card-text"><small class="text-muted">See</small></p>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
-	</div>
-
-	<footer class="footer text-center ">
-        <p>Made with <a href="https://en.wikipedia.org/wiki/Douglas_Adams" target="_blank">	Douglas Adams</a> by Creative Tim</p>
-    </footer>
-
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
-
-
-
-
+    </div>
+</div>
+<footer class="footer text-center ">
+    <p>Made with <a href="https://en.wikipedia.org/wiki/Douglas_Adams" target="_blank"> Douglas Adams</a> by Creative
+        Tim</p>
+</footer>
 </body>
-
-
-<script>var big_image;
-
-$(document).ready(function() {
-  BrowserDetect.init();
-
-  // Init Material scripts for buttons ripples, inputs animations etc, more info on the next link https://github.com/FezVrasta/bootstrap-material-design#materialjs
-  $('body').bootstrapMaterialDesign();
-
-  window_width = $(window).width();
-
-  $navbar = $('.navbar[color-on-scroll]');
-  scroll_distance = $navbar.attr('color-on-scroll') || 500;
-
-  $navbar_collapse = $('.navbar').find('.navbar-collapse');
-
-  //  Activate the Tooltips
-  $('[data-toggle="tooltip"], [rel="tooltip"]').tooltip();
-
-  // Activate Popovers
-  $('[data-toggle="popover"]').popover();
-
-  if ($('.navbar-color-on-scroll').length != 0) {
-    $(window).on('scroll', materialKit.checkScrollForTransparentNavbar);
-  }
-
-  materialKit.checkScrollForTransparentNavbar();
-
-  if (window_width >= 768) {
-    big_image = $('.page-header[data-parallax="true"]');
-    if (big_image.length != 0) {
-      $(window).on('scroll', materialKit.checkScrollForParallax);
-    }
-
-  }
-
-
-});
-
-$(document).on('click', '.navbar-toggler', function() {
-  $toggle = $(this);
-
-  if (materialKit.misc.navbar_menu_visible == 1) {
-    $('html').removeClass('nav-open');
-    materialKit.misc.navbar_menu_visible = 0;
-    $('#bodyClick').remove();
-    setTimeout(function() {
-      $toggle.removeClass('toggled');
-    }, 550);
-
-    $('html').removeClass('nav-open-absolute');
-  } else {
-    setTimeout(function() {
-      $toggle.addClass('toggled');
-    }, 580);
-
-
-    div = '<div id="bodyClick"></div>';
-    $(div).appendTo("body").click(function() {
-      $('html').removeClass('nav-open');
-
-      if ($('nav').hasClass('navbar-absolute')) {
-        $('html').removeClass('nav-open-absolute');
-      }
-      materialKit.misc.navbar_menu_visible = 0;
-      $('#bodyClick').remove();
-      setTimeout(function() {
-        $toggle.removeClass('toggled');
-      }, 550);
-    });
-
-    if ($('nav').hasClass('navbar-absolute')) {
-      $('html').addClass('nav-open-absolute');
-    }
-
-    $('html').addClass('nav-open');
-    materialKit.misc.navbar_menu_visible = 1;
-  }
-});
-
-materialKit = {
-  misc: {
-    navbar_menu_visible: 0,
-    window_width: 0,
-    transparent: true,
-    fixedTop: false,
-    navbar_initialized: false,
-    isWindow: document.documentMode || /Edge/.test(navigator.userAgent)
-  },
-
-  initFormExtendedDatetimepickers: function() {
-    $('.datetimepicker').datetimepicker({
-      icons: {
-        time: "fa fa-clock-o",
-        date: "fa fa-calendar",
-        up: "fa fa-chevron-up",
-        down: "fa fa-chevron-down",
-        previous: 'fa fa-chevron-left',
-        next: 'fa fa-chevron-right',
-        today: 'fa fa-screenshot',
-        clear: 'fa fa-trash',
-        close: 'fa fa-remove'
-      }
-    });
-  },
-
-  initSliders: function() {
-    // Sliders for demo purpose
-    var slider = document.getElementById('sliderRegular');
-
-    noUiSlider.create(slider, {
-      start: 40,
-      connect: [true, false],
-      range: {
-        min: 0,
-        max: 100
-      }
-    });
-
-    var slider2 = document.getElementById('sliderDouble');
-
-    noUiSlider.create(slider2, {
-      start: [20, 60],
-      connect: true,
-      range: {
-        min: 0,
-        max: 100
-      }
-    });
-  },
-
-  checkScrollForParallax: function() {
-    oVal = ($(window).scrollTop() / 3);
-    big_image.css({
-      'transform': 'translate3d(0,' + oVal + 'px,0)',
-      '-webkit-transform': 'translate3d(0,' + oVal + 'px,0)',
-      '-ms-transform': 'translate3d(0,' + oVal + 'px,0)',
-      '-o-transform': 'translate3d(0,' + oVal + 'px,0)'
-    });
-  },
-
-  checkScrollForTransparentNavbar: debounce(function() {
-    if ($(document).scrollTop() > scroll_distance) {
-      if (materialKit.misc.transparent) {
-        materialKit.misc.transparent = false;
-        $('.navbar-color-on-scroll').removeClass('navbar-transparent');
-      }
-    } else {
-      if (!materialKit.misc.transparent) {
-        materialKit.misc.transparent = true;
-        $('.navbar-color-on-scroll').addClass('navbar-transparent');
-      }
-    }
-  }, 17)
-};
-
-
-
-function debounce(func, wait, immediate) {
-  var timeout;
-  return function() {
-    var context = this,
-      args = arguments;
-    clearTimeout(timeout);
-    timeout = setTimeout(function() {
-      timeout = null;
-      if (!immediate) func.apply(context, args);
-    }, wait);
-    if (immediate && !timeout) func.apply(context, args);
-  };
-};
-
-var BrowserDetect = {
-  init: function() {
-    this.browser = this.searchString(this.dataBrowser) || "Other";
-    this.version = this.searchVersion(navigator.userAgent) || this.searchVersion(navigator.appVersion) || "Unknown";
-  },
-  searchString: function(data) {
-    for (var i = 0; i < data.length; i++) {
-      var dataString = data[i].string;
-      this.versionSearchString = data[i].subString;
-
-      if (dataString.indexOf(data[i].subString) !== -1) {
-        return data[i].identity;
-      }
-    }
-  },
-  searchVersion: function(dataString) {
-    var index = dataString.indexOf(this.versionSearchString);
-    if (index === -1) {
-      return;
-    }
-
-    var rv = dataString.indexOf("rv:");
-    if (this.versionSearchString === "Trident" && rv !== -1) {
-      return parseFloat(dataString.substring(rv + 3));
-    } else {
-      return parseFloat(dataString.substring(index + this.versionSearchString.length + 1));
-    }
-  },
-
-  dataBrowser: [{
-      string: navigator.userAgent,
-      subString: "Chrome",
-      identity: "Chrome"
-    },
-    {
-      string: navigator.userAgent,
-      subString: "MSIE",
-      identity: "Explorer"
-    },
-    {
-      string: navigator.userAgent,
-      subString: "Trident",
-      identity: "Explorer"
-    },
-    {
-      string: navigator.userAgent,
-      subString: "Firefox",
-      identity: "Firefox"
-    },
-    {
-      string: navigator.userAgent,
-      subString: "Safari",
-      identity: "Safari"
-    },
-    {
-      string: navigator.userAgent,
-      subString: "Opera",
-      identity: "Opera"
-    }
-  ]
-
-};</script>
- {% endblock %}
-
-
+{% endblock %}
 </html>

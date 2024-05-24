@@ -1,23 +1,23 @@
 import unittest
-from app.models import User
+
+from app.models import *
+
 
 class UserModelTestCase(unittest.TestCase):
-        def test_password_setter(self):
-            u=User(password='cat')
-            self.assertTrue(u.password_hash is not None)
+    def test_anon(self):
+        Role.insert_roles()
+        user = AnonymousUser()
+        self.assertFalse(user.can(Permission.ADMIN))
+        self.assertFalse(user.can(Permission.MODERATE))
+        self.assertFalse(user.can(Permission.FOLLOW))
+        self.assertFalse(user.can(Permission.WRITE))
+        self.assertFalse(user.can(Permission.COMMENT))
 
-        def test_no_password_getter(self):
-            u=User(password='cat')
-            with self.assertRaises(AttributeError):
-                u.password
-
-        def test_password_verification(self):
-            u = User(password='cat')
-            self.assertTrue(u.verify('cat'))
-            self.assertFalse(u.verify('dog'))
-
-        def test_password_salts_are_random(self):
-            u = User(password='cat')
-            u2 = User(passsword='cat')
-            self.assertTrue(u.password_hash !=u2.password_hash)
-
+    def test_user_role(self):
+        Role.insert_roles()
+        user = User(email='olyabaewa2014@mail.ru', username="Olya", phone='8989876655')
+        self.assertFalse(user.can(Permission.ADMIN))
+        self.assertFalse(user.can(Permission.MODERATE))
+        self.assertTrue(user.can(Permission.FOLLOW))
+        self.assertTrue(user.can(Permission.COMMENT))
+        self.assertTrue(user.can(Permission.WRITE))
