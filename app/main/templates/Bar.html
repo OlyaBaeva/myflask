@@ -18,12 +18,13 @@
             {% for cocktail in cocktails %}
             <div class="col-lg-4 mb-4">
                 <div class="card">
-                    <img alt="" class="card-img-top" src="static/images/{{cocktail.id}}.png"/>
+                    <img alt="" class="custom-img-small" src="static/images/{{cocktail.id}}.png"/>
                     <div class="card-body">
                         <h5 class="card-title">{{ cocktail.name }}</h5>
                         <p class="card-text">- Ingredients: {{ cocktail.ingredients }}</p>
                         <p class="card-text">- Volume: {{ cocktail.volume }}</p>
-                        <a class="btn btn-outline-success btn-sm" href="#">Read More</a>
+                        <a class="btn btn-outline-info" style="border-color: purple; color:purple;" href="#">Read
+                            More</a>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html>
+<head><title>Walking in the Space</title>
+    <meta charset="utf-8">
+    {% extends "res.html" %}
+    {% block content %}
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="static/assets/css/main.css">
+</head>
+<body>
+
+
+<header id="header">
+    <div class="logo"><a href="#">Walking <span>in the Space</span></a></div>
+</header>
+<section id="main">
+    <div class="inner">
+        <section id="one" class="wrapper style1">
+            <div class="image">
+                <img src="{{url_for('static', filename='images/fon1.jpg' )}}" alt="" width="1177" height="443"></div>
+            <header class="special"><h2>Сatch the moment</h2>
+                <p>Create unique memories</p>
+            </header>
+            <div class="content">
+                <p>The Restaurant in the End of the Universe offers you a unique event: walking in the space near the
+                    End of the universe. It will use in-fight proven spacecraft. </p>
+                <p>It is planned to involve both private individuals and a professional cosmonaut to fly along a free
+                    trajectory around the restaurant. They will be several hundred meters from the end. Any tourist eho
+                    decided to join a unique mission will see the end of everything with their own eyes, and then
+                    witness the begging
+                </p>
+            </div>
+        </section>
+        <section id="two" class="wrapper style2">
+            <header><h2>Cosmic adventures</h2>
+                <p>See with your own eyes</p>
+            </header>
+            <div class="content">
+                <div class="gallery">
+                    <div>
+                        <div class="image fit flush">
+                            <a href="{{url_for('static', filename='images/near.jpg' )}}"><img
+                                    src="{{url_for('static', filename='images/near.jpg' )}}" alt="" width="600"
+                                    height="250"></a>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="image fit flush">
+                            <a href="{{url_for('static', filename='images/whitehole.jpg' )}}"><img
+                                    src="{{url_for('static', filename='images/whitehole.jpg' )}}" alt="" width="600"
+                                    height="250"></a>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="image fit flush">
+                            <a href="{{url_for('static', filename='images/fon.jpg' )}}"><img
+                                    src="{{url_for('static', filename='images/fon.jpg' )}}" alt="" width="600"
+                                    height="250"></a>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="image fit flush">
+                            <a href="{{url_for('static', filename='images/walks.jpg' )}}"><img
+                                    src="{{url_for('static', filename='images/walks.jpg' )}}" alt="" width="600"
+                                    height="250"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!-- Three -->
+        <section id="three" class="wrapper">
+            <div class="spotlight">
+                <div class="image flush"><img src="{{url_for('static', filename='images/fon4.jpg' )}}" alt=""
+                                              width="700" height="325"></div>
+                <div class="inner">
+                    <h3>Blue star</h3>
+                    <p>The color of a star comes from its temperature. The coolest stars appear red, while the hottest
+                        stars are blue. And for a star, the only thing that defines the temperature of a star is its
+                        mass. Blue stars are stars that have at least 3 times the mass of the Sun and up. Whether a star
+                        has 10 times the mass of the Sun or 150 solar masses, it’s going to appear blue to our eyes.
+
+                        An example of a blue star is the familiar Rigel, the brightest star in the constellation Orion
+                        and the 6th brightest star in the sky. </p>
+                </div>
+            </div>
+            <div class="spotlight alt">
+                <div class="image flush"><img src="{{url_for('static', filename='images/fon3.jpg' )}}" alt=""
+                                              width="700" height="325"></div>
+                <div class="inner">
+                    <h3>Magnetars</h3>
+                    <p>Like other neutron stars, magnetars are around 20 kilometres (12 mi) in diameter, and have a mass
+                        of about 1.4 solar masses. They are formed by the collapse of a star with a mass 10–25 times
+                        that of the Sun.
+                        The density of the interior of a magnetar is such that a tablespoon of its substance would have
+                        a mass of over 100 million tons. Magnetars are differentiated from other neutron stars by having
+                        even stronger magnetic fields,
+                        and by rotating more slowly in comparison.</p>
+                </div>
+            </div>
+            <div class="spotlight">
+                <div class="image flush"><img src="{{url_for('static', filename='images/maxresdefault.jpg' )}}" alt=""
+                                              width="700" height="325"></div>
+                <div class="inner">
+                    <h3>The Hitchhiker's Guide to the Galaxy</h3>
+                    <p>In many of the more relaxed civilizations on the Outer Eastern Rim of the Galaxy, the Hitch
+                        Hiker's Guide has already supplanted the great Encyclopedia Galactica as the standard repository
+                        of all knowledge and wisdom, for though it has many omissions and contains much that is
+                        apocryphal, or at least wildly inaccurate, it scores over the older, more pedestrian work in two
+                        important respects.
+                        First, it is slightly cheaper; and secondly it has the words Don't Panic inscribed in large
+                        friendly letters on its cover. </p>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+<script src="static/assets/js/jquery.min.js"></script>
+<script src="static/assets/js/jquery.poptrox.min.js"></script>
+<script src="static/assets/js/skel.min.js"></script>
+<script src="static/assets/js/util.js"></script>
+<script src="static/assets/js/main.js"></script>
+{% endblock %}
+</body>
+</html>

@@ -34,40 +34,41 @@
             </div>
             <div class="card-deck">
                 <div class="card">
-                    <a href="/#" style="text-decoration: none; color: inherit;">
-                        <img class="card-img-top" src="static/walks.jpg" alt="Card image cap">
+                    <a href="{{ url_for('main.walking') }}" style="text-decoration: none; color: inherit;">
+                        <img class="card-img-top" src="{{ url_for('main.static', filename='images/walks.jpg') }}"
+                             alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">Space walking </h5>
                             <p class="card-text"></p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            <p class="card-text"><small class="text-muted">See</small></p>
                         </div>
                     </a>
                 </div>
                 <div class="card">
-                    <a href="/reserve" style="text-decoration: none; color: inherit;">
-                        <img class="card-img-top" src="{{ url_for('static', filename='images/room1.jpeg') }}"
+                    <a href="{{ url_for('main.reserve') }}" style="text-decoration: none; color: inherit;">
+                        <img class="card-img-top" src="{{ url_for('main.static', filename='images/room1.jpeg') }}"
                              alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">Apartments</h5>
                             <p class="card-text"></p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            <p class="card-text"><small class="text-muted">See</small></p>
                         </div>
                     </a>
                 </div>
                 <div class="card">
-                    <a href="/menu" style="text-decoration: none; color: inherit;">
-                        <img class="card-img-top" src="{{ url_for('static', filename='/cafe2.jpeg') }}"
+                    <a href="{{ url_for('main.restaurant') }}" style="text-decoration: none; color: inherit;">
+                        <img class="card-img-top" src="{{ url_for('main.static', filename='/cafe2.jpeg') }}"
                              alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">Restaurant</h5>
                             <p class="card-text"></p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            <p class="card-text"><small class="text-muted">See</small></p>
                         </div>
                     </a>
                 </div>
                 <div class="card">
-                    <a href="/bar" style="text-decoration: none; color: inherit;">
-                        <img class="card-img-top" src="{{ url_for('static', filename='/cafe1.jpeg') }}"
+                    <a href="{{ url_for('main.bar') }}" style="text-decoration: none; color: inherit;">
+                        <img class="card-img-top" src="{{ url_for('main.static', filename='/cafe1.jpeg') }}"
                              alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">Bar</h5>
@@ -77,8 +78,8 @@
                     </a>
                 </div>
                 <div class="card">
-                    <a href="/activity" style="text-decoration: none; color: inherit;">
-                        <img class="card-img-top" src="{{ url_for('static', filename='images/card.jpeg') }}"
+                    <a href="{{ url_for('main.activity') }}" style="text-decoration: none; color: inherit;">
+                        <img class="card-img-top" src="{{ url_for('main.static', filename='images/card.jpeg') }}"
                              alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">Activities</h5>

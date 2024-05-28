@@ -58,7 +58,6 @@ def delete(id):
 @auth.route("/logout")
 def logout():
     logout_user()
-    flash('You have been logged out.')
     return redirect(url_for('main.index'))
 
 
@@ -71,7 +70,7 @@ def confirm(token):
         db.session.commit()
         flash('Your confirmation was successful.')
     else:
-        flash('Your link in not valid.')
+        flash('Your link in not valid.', 'error')
     return redirect(url_for('main.index'))
 
 
@@ -101,6 +100,9 @@ def register():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None:
+            if user.confirmed:
+                flash('You are already registered')
+                return redirect(url_for('auth.login'))
             user.nick = form.nick.data
             user.password = form.password.data
             db.session.commit()

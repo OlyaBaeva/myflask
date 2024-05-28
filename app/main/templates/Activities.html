@@ -5,7 +5,7 @@
     <title>Activities</title>
     <link rel="stylesheet" href="{{url_for('static', filename='activity.css')}}">
     {% extends "res.html" %}
-    </head>
+</head>
 <body>
 {% block content %}
 <section id="header" class="jumbotron text-center">
@@ -17,12 +17,14 @@
         <div class="row">
             {% for event in events %}
             <div class="col-lg-4 mb-4">
-                <div class="card">
-                    <img src="{{ url_for('static', filename='images/' + event.photo) }}" alt="Event Photo">
+                <div class="card" style="height: 850px;">
+                    <img class="custom-img-small" src="{{ url_for('static', filename='images/' + event.photo) }}"
+                         alt="Event Photo">
                     <div class="card-body">
                         <h5 class="card-title">{{ event.name }}</h5>
                         <p class="card-text">- Description: {{ event.description }}</p>
-                        <a href="#" class="btn btn-outline-success btn-sm">Read More</a>
+                        <a href="#" class="btn btn-outline-info" style="border-color: purple; color:purple;">Read
+                            More</a>
                     </div>
                 </div>
             </div>

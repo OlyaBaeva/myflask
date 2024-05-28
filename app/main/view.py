@@ -46,7 +46,7 @@ def reserve():
         if request.form.get('submit_review') is not None:
             since = date_times(request.form['since'])
             forend = date_times(request.form['for'])
-            if since != "" and forend != "":
+            if since != "" and forend != "" and since < forend:
                 session['since'] = since
                 session['forend'] = forend
             else:

@@ -1,3 +1,11 @@
 #header {
     background: url('picture.png') center -80px / cover no-repeat;
+    color: white;
+    padding-top: 85px;
+}
+.custom-img-small {
+    height: 350px;
+}
+.card {
+height: 650px;
 }

@@ -3,7 +3,6 @@ import unittest
 from app import create_app, db
 from app.models import *
 an_app = create_app("default")
-
 '''''
 @an_app.shell_context_processors
 def make_shell_context():

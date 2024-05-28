@@ -11,7 +11,7 @@ class Permission:
     COMMENT = 2
     WRITE = 4
     MODERATE = 8
-    ADMIN = 16
+    ADMINISTER = 16
 
 
 class Bar(db.Model):
@@ -93,7 +93,7 @@ class User(db.Model, UserMixin):
         return self.role is not None and self.role.has_permission(perm)
 
     def is_admin(self):
-        return self.can(Permission.ADMIN)
+        return self.can(Permission.ADMINISTER)
 
     def generate_confirmation_token(self):
         jws = JsonWebSignature()
