@@ -9,3 +9,14 @@
 .card {
 height: 650px;
 }
+
+.card-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 150px;
+}
+
+.card-text-expanded {
+  overflow: visible;
+  max-height: unset;
+}

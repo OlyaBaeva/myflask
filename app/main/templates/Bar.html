@@ -8,6 +8,18 @@
     <link href="{{url_for('static', filename='activity.css')}}" rel="stylesheet">
 </head>
 <body>
+<div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="descriptionModalLabel">Описание</h5>
+            </div>
+            <div class="modal-body">
+                <p id="description-text"></p>
+            </div>
+        </div>
+    </div>
+</div>
 <section class="jumbotron text-center" id="header">
     <h1 class="display-3">BAR</h1>
     <p class="lead">Cocktail card</p>
@@ -21,10 +33,12 @@
                     <img alt="" class="custom-img-small" src="static/images/{{cocktail.id}}.png"/>
                     <div class="card-body">
                         <h5 class="card-title">{{ cocktail.name }}</h5>
-                        <p class="card-text">- Ingredients: {{ cocktail.ingredients }}</p>
+                        <p class="card-text" id="{{ cocktail.id }}">- Ingredients: {{ cocktail.ingredients }}</p>
                         <p class="card-text">- Volume: {{ cocktail.volume }}</p>
-                        <a class="btn btn-outline-info" style="border-color: purple; color:purple;" href="#">Read
-                            More</a>
+                        <button class="btn btn-outline-info" style="border-color: purple; color:purple;"
+                                onclick="toggleDescription('{{ cocktail.id }}')" data-bs-toggle="modal"
+                                data-bs-target="#descriptionModal">Read more
+                        </button>
                     </div>
                 </div>
             </div>
@@ -32,6 +46,14 @@
         </div>
     </div>
 </section>
+<script>
+function toggleDescription(id) {
+  const descriptionText = document.getElementById(id).innerText;
+document.getElementById('description-text').innerText = descriptionText;
+  $('#descriptionModal').modal('show');
+}
+
+</script>
 {% endblock %}
 </body>
 </html>

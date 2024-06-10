@@ -1,5 +1,7 @@
 from flask import request, render_template, session, redirect, url_for, flash
 from flask_login import current_user
+from sqlalchemy.exc import IntegrityError
+
 from . import main
 from .forms import MyForm, ReviewForm
 from app.models import *
@@ -92,7 +94,7 @@ def reserve():
     else:
         if request.form.get('submit_review') is not None:
             since = date_times(request.form['since'])
-            forend = date_times(request.form['for'])
+            forend = date_times(request.form['forend'])
             if since != "" and forend != "" and since < forend:
                 session['since'] = since
                 session['forend'] = forend
@@ -103,17 +105,29 @@ def reserve():
             session['name'] = form.name.data
             session['email'] = form.email.data
             session['phone'] = form.phone.data
-            if User.query.filter_by(username=form.name.data).first() is None:
-                new_user = User(username=form.name.data, phone=form.phone.data, email=form.email.data)
-                db.session.add(new_user)
-            new_book = Reservation(name=form.NameApart.data, email=form.email.data, since=session['since'],
-                                   forend=session['forend'])
-            db.session.add(new_book)
-            db.session.commit()
-            return render_template('booking.html')
+            try:
+                if User.query.filter_by(email=form.name.data).first() is None and User.query.filter_by(
+                        username=form.name.data).first() is None:
+                    new_user = User(username=form.name.data, phone=form.phone.data, email=form.email.data)
+                    db.session.add(new_user)
+                else:
+                    flash('Пользователь с такой почтой или именем пользователя уже существует!', 'danger')
+                    return redirect(url_for('main.reserve'))
+                new_book = Reservation(name=form.NameApart.data, email=form.email.data, since=session['since'],
+                                       forend=session['forend'])
+                db.session.add(new_book)
+                db.session.commit()
+                flash('Вам было отправлено письмо на почту с информацией о вашем бронировании!', 'success')
+                return redirect(url_for('main.reserve'))
+            except IntegrityError as e:
+                flash('Произошла ошибка бронирования!', 'danger')
+                if "key 'email'" in str(e):
+                    flash('Аккаунт с данной почтой уже существует.', 'email_error')
+                elif "key 'username'" in str(e):
+                    flash('Пользователь с таким именем уже существует', 'username_error')
         reservation = Reservation.query.all()
         since = date_times(request.form['since'])
-        forend = date_times(request.form['for'])
+        forend = date_times(request.form['forend'])
         free = []
         for apart in apartments:
             for reserve in reservation:
@@ -146,7 +160,8 @@ def book(info):
         new_book = Reservation(name=info, email=email, since=since, forend=forend)
         db.session.add(new_book)
         db.session.commit()
-        return render_template('booking.html')
+        flash('Вам было отправлено письмо на почту с информацией о вашем бронировании!', 'success')
+        return redirect(url_for('main.reserve'))
     return redirect(url_for('main.reserve'))
 
 

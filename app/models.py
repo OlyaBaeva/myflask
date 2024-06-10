@@ -81,13 +81,13 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(128))
     confirmed = db.Column(db.Boolean, default=False)
 
-    def init(self, *kwargs):
-        super(User, self).init(*kwargs)
-        if self.role is None or self.role == '':
+    def init(self, **kwargs):
+        super(User, self).__init__(**kwargs)
+        if self.role_id is None or self.role_id == '':
             if self.email == current_app.config['FLASKY_ADMIN']:
-                self.role = Role.query.filter_by(name='Administrator').first()
-            if self.role is None:
-                self.role = Role.query.filter_by(default=True).first()
+                self.role_id = Role.query.filter_by(name='Administrator').first()
+            if self.role_id is None:
+                self.role_id = Role.query.filter_by(default=True).first().id
 
     def can(self, perm):
         return self.role is not None and self.role.has_permission(perm)
@@ -164,7 +164,7 @@ class Role(db.Model):
             'User': [Permission.FOLLOW, Permission.COMMENT, Permission.WRITE],
             'Moderator': [Permission.FOLLOW, Permission.COMMENT, Permission.WRITE, Permission.MODERATE],
             'Administrator': [Permission.FOLLOW, Permission.COMMENT, Permission.WRITE, Permission.MODERATE,
-                              Permission.ADMIN]
+                              Permission.ADMINISTER]
         }
         default_role = "User"
         for r in roles.keys():

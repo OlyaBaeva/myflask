@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-
     {% extends "res.html" %}
     {% block content %}
     <link rel="stylesheet" href="{{url_for('static', filename='activity.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -15,8 +13,9 @@
     <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
     <script>
     let show_is = false;
-    function reply_click(){
-    const cardToShow = document.getElementById('cardToShow');
+    function reply_click(apartment){
+    const nameApartInput = document.querySelector('input[name="NameApart"]');
+    nameApartInput.value = apartment;
     if (!show_is) {
         cardToShow.style.display = "inherit";
         show_is = true;
@@ -26,12 +25,30 @@
     }
 };
 
-    </script>
+   </script>
+   <script>
+   function toggleDescription(id) {
+  const descriptionText = document.getElementById(id).innerText;
+  document.getElementById('description-text').innerText = descriptionText;
+  $('#descriptionModal').modal('show');
+  }
+  </script>
 </head>
 <body>
-
+<div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="descriptionModalLabel">Описание</h5>
+            </div>
+            <div class="modal-body">
+                <p id="description-text"></p>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="cardToShow" class="card text-center sticky-top"
-     style="display:none;position: fixed; top: 0; left: 50%; transform: translateX(-50%); z-index: 1000;height: 450px; width: 300px; background-color: #ffffff;">
+     style="display:none;position: fixed; top: 100px; left: 50%; transform: translateX(-50%); z-index: 1000;height: 450px; width: 300px; background-color: #ffffff;">
     <div class="card-header h5 text-white" style="background-color: #2f313a">Book</div>
     <div class="card-body px-5" style="color: black;">
         <form method="post">
@@ -48,21 +65,18 @@
                 {% set phone = session['phone'] %}
                 {{ form.phone.label }}
                 {{ form.phone(value=phone) }}
-                {% set since = session['since'] %}
-                {{ form.since.label }}
-                {{ form.since(value=since) }}
-                {% set forend = session['forend'] %}
-                {{ form.forend.label }}
-                {{ form.forend(value=forend) }}
                 {% else %}
                 {{ form.name.label }}
                 {{ form.name() }}
                 {{ form.email.label}} {{ form.email()}}
                 {{ form.phone.label}} {{ form.phone()}}
-                {{ form.since.label}} {{ form.since()}}
-                {{ form.forend.label}} {{ form.forend()}}
                 {% endif %}
-                {{ form.NameApart.label}} {{ form.NameApart()}}
+                {% set since = session['since'] %}
+                {{ form.since.label }} {{ form.since(value=since, disabled=True) }}<br>
+                {% set forend = session['forend'] %}
+                {{ form.forend.label }} <br>
+                {{ form.forend(value=forend, disabled=True) }}
+                {{ form.NameApart(type='hidden', value=apartment)}}
 
                 {% if form.errors %}
 
@@ -79,7 +93,7 @@
                 {% endfor %}
 
                 {% endif %}
-                {{ form.submit() }}
+                {{ form.submit() }}<br>
                 {% endif %}
             </div>
         </form>
@@ -94,6 +108,15 @@
 <section>
     <form method="post" action="/reserve">
         {% for category, message in get_flashed_messages(with_categories=true) %}
+        {% if message == 'Вам было отправлено письмо на почту с информацией о вашем бронировании!' or message ==
+        'Произошла ошибка бронирования!' or message == 'Пользователь с такой почтой или именем пользователя уже
+        существует!' %}
+        <div class="alert alert-{{ category }}" role="alert">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% for category, message in get_flashed_messages(with_categories=true) %}
         {% if message == 'Неправильный формат даты, повторите, пожалуйста' %}
         <spam class="{{ category }}">{{ message }}</spam>
         {% endif %}
@@ -103,7 +126,7 @@
                 <input id='datetimepicker6' width="312" name="since"/>
             </div>
             <div class='col-md-5'>
-                <input id='datetimepicker7' width="312" name="for"/>
+                <input id='datetimepicker7' width="312" name="forend"/>
             </div>
         </div>
         <script>
@@ -123,13 +146,12 @@ $('#datetimepicker7').datepicker({
   toggleSelected: false,
 });
 
-
-
         </script>
         <button type="submit" class="btn btn-outline-dark" name="submit_review">Search</button>
     </form>
 </section>
 <section id="gallery">
+
     <div class="container">
         <div class="row row-cols-1 row-cols-md-3 row-cols-lg-3 g-4">
             {% for info in apartments %}
@@ -137,16 +159,20 @@ $('#datetimepicker7').datepicker({
                 <div class="col">
                     <div class="card">
                         <img class="custom-img-small" src="{{ url_for('static', filename='images/' + info.photo) }}"
-                             alt="Event Photo">
+                             alt="Room Photo">
                         <div class="card-body">
                             <h5 class="card-title">{{ info.Name }}</h5>
-                            <p class="card-text">- Description: {{ info.description }}</p>
+                            <p class="card-text" id="{{ info.id }}"> {{ info.description }}</p>
+                            <a type class="btn btn-outline-info" style="border-color: purple; color:purple;"
+                               onclick="toggleDescription('{{ info.id }}')" data-bs-toggle="modal"
+                               data-bs-target="#descriptionModal" type="submit">Read more</a>
                             {% if current_user.is_authenticated %}
                             <button class="btn btn-outline-info" style="border-color: purple; color:purple;"
                                     type="submit">Book
                             </button>
                             {% else %}
-                            <a type="button" onclick="reply_click()" class="btn btn-outline-success btn-sm"
+                            <a type="button" onclick="reply_click('{{ info.Name }}')"
+                               class="btn btn-outline-success btn-sm"
                                type="submit">
                                 Book
                             </a>

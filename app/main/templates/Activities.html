@@ -8,23 +8,39 @@
 </head>
 <body>
 {% block content %}
+<div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="descriptionModalLabel">Описание</h5>
+            </div>
+            <div class="modal-body">
+                <p id="description-text"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <section id="header" class="jumbotron text-center">
     <h1 class="display-3">Events</h1>
     <p class="lead">List of events</p>
 </section>
+
 <section id="gallery">
     <div class="container">
         <div class="row">
             {% for event in events %}
             <div class="col-lg-4 mb-4">
-                <div class="card" style="height: 850px;">
+                <div class="card">
                     <img class="custom-img-small" src="{{ url_for('static', filename='images/' + event.photo) }}"
                          alt="Event Photo">
                     <div class="card-body">
                         <h5 class="card-title">{{ event.name }}</h5>
-                        <p class="card-text">- Description: {{ event.description }}</p>
-                        <a href="#" class="btn btn-outline-info" style="border-color: purple; color:purple;">Read
-                            More</a>
+                        <p class="card-text" id="{{ event.id }}"> {{ event.description }}</p>
+                        <button class="btn btn-outline-info" style="border-color: purple; color:purple;"
+                                onclick="toggleDescription('{{ event.id }}')" data-bs-toggle="modal"
+                                data-bs-target="#descriptionModal">Read more
+                        </button>
                     </div>
                 </div>
             </div>
@@ -32,6 +48,14 @@
         </div>
     </div>
 </section>
+<script>
+function toggleDescription(id) {
+  const descriptionText = document.getElementById(id).innerText;
+document.getElementById('description-text').innerText = descriptionText;
+  $('#descriptionModal').modal('show');
+}
+
+</script>
 {% endblock %}
 </body>
 </html>
